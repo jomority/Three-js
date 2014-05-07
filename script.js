@@ -9,8 +9,12 @@ var camera;
 var player, vector1;
 var floor1, floor2;
 var walll1, walll2, wallr1, wallr2;
-var ambientLight, directLight;
+var rendernew = true, actualfloor1 = true;
+var ambientLight, directLight; //ambientLight2;
 var up = false, left = false, right = false;
+var z;
+var objects = new Array();
+var objectspawntime = 0;
 
 function onLoad() {
     //initialize
@@ -32,23 +36,55 @@ function onLoad() {
     camera.rotation.x = -Math.PI/16;
     scene.add(camera);
 
+    /*/shadows
+    renderer.shadowMapEnabled = true;
+    renderer.shadowMapSoft = false;
+
+    renderer.shadowCameraNear = 3;
+    renderer.shadowCameraFar = camera.far;
+    renderer.shadowCameraFov = 50;
+
+    renderer.shadowMapBias = 0.0039;
+    renderer.shadowMapDarkness = 0.5;
+    renderer.shadowMapWidth = 1024;
+    renderer.shadowMapHeight = 1024;//*/
+
 
     //create player
     vector1 = new THREE.Vector3(0,10,-2);
-    player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
+    //vector1 = new THREE.Vector3(0,1,0);
+    player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshLambertMaterial({color: 0xff0000, wireframe:false}));
     player.position.y = vector1.y;
     player.position.x = vector1.x;
     player.position.z = vector1.z;
     player.speedX = 0;
     player.radius = 1;
+    player.castShadow = true;
     scene.add(player);
 
+
+    /*//test
+    var vector2 = new THREE.Vector3(0,0,-2);
+    var player2 = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
+    player2.position.y = vector2.y;
+    player2.position.x = vector2.x;
+    player2.position.z = vector2.z;
+    player2.receiveShadow = true;
+    scene.add(player2);//*/
+
     //create ambient light
-    ambientLight = new THREE.AmbientLight(0x505050);
+    ambientLight = new THREE.AmbientLight(0x212223);
     scene.add(ambientLight);
+    //ambientLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+    //ambientLight2.position.set(0,0,1);
+    //scene.add(ambientLight2);
 
     //create direct light
-    directLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directLight = new THREE.DirectionalLight(0xffffff, 1);
+    directLight.position.y = 2;
+    directLight.position.z = 2;
+    directLight.position.x = 1;
+    directLight.castShadow = true;
     scene.add(directLight);
 
 
@@ -57,57 +93,7 @@ function onLoad() {
     addListener();
     floor();
     spawn();
-}
-
-var temp2 = 1;
-function spawn() {
-    renderer.render(scene, camera);
-
-    var phi = Math.PI/10*temp2;
-    temp2 -=0.01;
-
-    var m = new THREE.Matrix3(
-        Math.cos(phi), 0,Math.sin(phi),
-        0,             0.95,0,
-        -Math.sin(phi),0,Math.cos(phi));
-
-    vector1.applyMatrix3(m);
-
-    player.position.y = vector1.y;
-    player.position.x = vector1.x;
-    player.position.z = vector1.z;
-
-    if(player.position.y < 1) {
-        player.position.y = 1;
-        requestAnimationFrame(spawn2);
-    } else {
-        requestAnimationFrame(spawn);
-    }
-}
-
-var temp1 = 0;
-function spawn2() {
-    renderer.render(scene, camera);
-
-    var phi = Math.PI/10*temp2;
-    temp1 += phi;
-
-    var m = new THREE.Matrix3(
-        Math.cos(phi), 0,Math.sin(phi),
-        0,             1,0,
-        -Math.sin(phi),0,Math.cos(phi));
-
-    vector1.applyMatrix3(m);
-
-    player.position.y = vector1.y;
-    player.position.x = vector1.x;
-    player.position.z = vector1.z;
-
-    if(temp1 > Math.PI && player.position.x > -0.1 && player.position.x < 0.1) {
-        requestAnimationFrame(run);
-    } else {
-        requestAnimationFrame(spawn2);
-    }
+    //run();
 }
 
 function run() {
@@ -115,8 +101,9 @@ function run() {
 
     //camera rotation
     if(up) {
-        player.position.z -= 0.1;
-        camera.position.z -= 0.1;
+        player.position.z -= 1;
+        camera.position.z -= 1;
+        //directLight.position.z -= 0.1;
         player.rotation.x += 0.1;
     }
     if(left) {
@@ -152,45 +139,42 @@ function run() {
         player.speedX = -player.speedX * 0.5;
     }
 
+    //set z variable
+    z = -(player.position.z + 12);
+    //console.log(z);
+
+    //move floor & walls
+    if(-z % 100 < -90 && rendernew) {
+        if(actualfloor1) {
+            floor1.position.z -= 200;
+            walll1.position.z -= 200;
+            wallr1.position.z -= 200;
+
+            actualfloor1 = false;
+        } else {
+            floor2.position.z -= 200;
+            wallr2.position.z -= 200;
+            walll2.position.z -= 200;
+
+            actualfloor1 = true;
+        }
+        rendernew = false;
+    } else if(-z % 100 < -1 && -z % 100 > -80 && !rendernew) {
+        rendernew = true;
+    }
+    //console.log((player.position.z + 12) % 100 + "  " + rendernew + "  " + actualfloor1);
+
+    //objects
+    if(objectspawntime>100) {
+        var object = objects[objects.length-1] = getObject();
+
+        scene.add(object);
+        //console.log(z-20);
+        objectspawntime = 0;
+    }
 
 
+
+    objectspawntime++;
     requestAnimationFrame(run);
 }
-
-function addListener() {
-    var dom = renderer.domElement;
-    //dom.addEventListener('onKeyDown', onKeyDown(event), false);
-    //dom.addEventListener('onKeyUp', onKeyUp(event), false);
-    dom.addEventListener('onMouseUp', onMouseUp(), false);
-    window.onkeyup = function(e) {
-        var key = e.keyCode ? e.keyCode : e.which;
-        if(key == 87){
-            up = false;
-        } else if(key == 65) {
-            left = false;
-        } else if(key == 68) {
-            right = false;
-        }
-    }
-    window.onkeydown = function(e) {
-        var key = e.keyCode ? e.keyCode : e.which;
-        if(key == 87){
-            up = true;
-        } else if(key == 65) {
-            left = true;
-        } else if(key == 68) {
-            right = true;
-        }
-    }
-}
-function onMouseUp() {
-
-}
-
-
-var mouse = {x: 0, y: 0};
-
-document.addEventListener('mousemove', function(e){
-    mouse.x = e.clientX || e.pageX;
-    mouse.y = e.clientY || e.pageY;
-}, false);
