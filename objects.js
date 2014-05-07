@@ -19,13 +19,8 @@ function cylinder() {
         new THREE.MeshLambertMaterial({map: texture}));
 
 
-    if(Math.random() > 0.5) {
 
-        cylinder.position.x = -5;
-    } else {
-        cylinder.position.x = 5;
-
-    }
+    cylinder.position.x = Math.random()*8-4
 
 
     cylinder.position.y = 1.25;
