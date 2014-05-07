@@ -18,6 +18,7 @@ function onLoad() {
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(container.offsetWidth, container.offsetHeight);
+    renderer.setClearColor(0xffffff,1);
 
     container.appendChild(renderer.domElement);
 
@@ -32,7 +33,7 @@ function onLoad() {
 
     //create player
     player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
-    player.position.y = 0.5;
+    player.position.y = 1;
     scene.add(player);
 
     //create ambient light
@@ -56,19 +57,30 @@ function run() {
 
     if(up) {
         player.position.z -= 0.1;
+        camera.position.z -= 0.1;
     }
     if(left) {
         player.position.x -= 0.1;
+        if(camera.rotation.z > 0) {
+            camera.rotation.z *= 0.9;
+        } else if (camera.rotation.z == 0){
+            camera.rotation.z -= 0.001;
+        } else {
+            camera.rotation.z *= 1.1;
+        }
+
+        if(camera.rotation.z < - Math.PI/8) camera.rotation.z = -Math.PI/8;
     }
     if(right) {
         player.position.x += 0.1;
+        camera.rotation.z += 0.01;
+        if(camera.rotation.z > Math.PI/8) camera.rotation.z = Math.PI/8;
+    }
+    if(!right && !left) {
+        camera.rotation.z *= 0.9;
     }
 
     requestAnimationFrame(run);
-}
-
-function createRoom() {
-
 }
 
 function addListener() {
