@@ -152,10 +152,10 @@ function run() {
     //collision
     if(player.position.x < -5 + player.radius) {
         player.position.x = -5 + player.radius;
-        player.speedX = -player.speedX * 0.3;
+        player.speedX = -player.speedX * 0.5;
     } else if(player.position.x > 5 - player.radius) {
         player.position.x = 5 - player.radius;
-        player.speedX = -player.speedX * 0.3;
+        player.speedX = -player.speedX * 0.5;
     }
 
     //set z variable
@@ -180,17 +180,6 @@ function run() {
         rendernew = false;
     } else if(-z % 100 < -1 && -z % 100 > -80 && !rendernew) {
         rendernew = true;
-    }
-
-    //object collision
-    for(var i = MAXOBJECTS; i > 0; i--) {
-        var radius = objects[objects.length - i].geometry.getBoundingSphere.radius;
-        var pointObjectX = objects[objects.length - i].position.x;
-        var pointObjectZ = objects[objects.length - i].position.z;
-        var v = new THREE.Vector2(pointObjectX - player.position.x, pointObjectZ - player.position.z);
-        if(v.length() < player.radius + radius) {
-
-        }
     }
 
     //objects

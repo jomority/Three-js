@@ -9,7 +9,7 @@ function floor() {
     var position1 = new THREE.Vector3(0,0, -size1.y/2 + 10);
 
 
-    var texture = THREE.ImageUtils.loadTexture("wood.jpg", {});
+    var texture = THREE.ImageUtils.loadTexture("wood2.jpg", {});
     //floor1 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({color: 0xB452CD}));
     floor1 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({map: texture}));
     floor1.rotation.x = - Math.PI/2;
