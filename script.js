@@ -174,7 +174,7 @@ function run() {
             floor2.position.z -= 200;
             wallr2.position.z -= 200;
             walll2.position.z -= 200;
-
+S
             actualfloor1 = true;
         }
         rendernew = false;
@@ -182,7 +182,7 @@ function run() {
         rendernew = true;
     }
 
-    //objects
+    //objectsa
     //console.log(Math.round(z%100));
     if(Math.round(z%70) == 0) {
         var object = getObject();
