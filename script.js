@@ -6,7 +6,7 @@ var container;
 var renderer;
 var scene;
 var camera;
-var player;
+var player, vector1;
 var floor1, floor2;
 var walll1, walll2, wallr1, wallr2;
 var ambientLight, directLight;
@@ -34,8 +34,11 @@ function onLoad() {
 
 
     //create player
+    vector1 = new THREE.Vector3(0,10,-2);
     player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
-    player.position.y = 1;
+    player.position.y = vector1.y;
+    player.position.x = vector1.x;
+    player.position.z = vector1.z;
     player.speedX = 0;
     player.radius = 1;
     scene.add(player);
@@ -53,7 +56,58 @@ function onLoad() {
     //start
     addListener();
     floor();
-    run();
+    spawn();
+}
+
+var temp2 = 1;
+function spawn() {
+    renderer.render(scene, camera);
+
+    var phi = Math.PI/10*temp2;
+    temp2 -=0.01;
+
+    var m = new THREE.Matrix3(
+        Math.cos(phi), 0,Math.sin(phi),
+        0,             0.95,0,
+        -Math.sin(phi),0,Math.cos(phi));
+
+    vector1.applyMatrix3(m);
+
+    player.position.y = vector1.y;
+    player.position.x = vector1.x;
+    player.position.z = vector1.z;
+
+    if(player.position.y < 1) {
+        player.position.y = 1;
+        requestAnimationFrame(spawn2);
+    } else {
+        requestAnimationFrame(spawn);
+    }
+}
+
+var temp1 = 0;
+function spawn2() {
+    renderer.render(scene, camera);
+
+    var phi = Math.PI/10*temp2;
+    temp1 += phi;
+
+    var m = new THREE.Matrix3(
+        Math.cos(phi), 0,Math.sin(phi),
+        0,             1,0,
+        -Math.sin(phi),0,Math.cos(phi));
+
+    vector1.applyMatrix3(m);
+
+    player.position.y = vector1.y;
+    player.position.x = vector1.x;
+    player.position.z = vector1.z;
+
+    if(temp1 > Math.PI && player.position.x > -0.1 && player.position.x < 0.1) {
+        requestAnimationFrame(run);
+    } else {
+        requestAnimationFrame(spawn2);
+    }
 }
 
 function run() {
@@ -66,11 +120,19 @@ function run() {
         player.rotation.x += 0.1;
     }
     if(left) {
-        camera.rotation.z -= 0.01;
+        if(camera.rotation.z > Math.PI/32) {
+            camera.rotation.z *= 0.9;
+        } else {
+            camera.rotation.z -= 0.01;
+        }
         if(camera.rotation.z < -Math.PI/8) camera.rotation.z = -Math.PI/8;
     }
     if(right) {
-        camera.rotation.z += 0.01;
+        if(camera.rotation.z < -Math.PI/32) {
+            camera.rotation.z *= 0.9;
+        } else {
+            camera.rotation.z += 0.01;
+        }
         if(camera.rotation.z > Math.PI/8) camera.rotation.z = Math.PI/8;
     }
     if(!right && !left) {
@@ -82,8 +144,12 @@ function run() {
     player.position.x += player.speedX;
 
     //collision
-    if(player.position.x + player.radius < -5) {
+    if(player.position.x < -5 + player.radius) {
         player.position.x = -5 + player.radius;
+        player.speedX = -player.speedX * 0.5;
+    } else if(player.position.x > 5 - player.radius) {
+        player.position.x = 5 - player.radius;
+        player.speedX = -player.speedX * 0.5;
     }
 
 
