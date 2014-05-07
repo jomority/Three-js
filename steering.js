@@ -15,6 +15,8 @@ function addListener() {
             left = false;
         } else if(key == 68) {
             right = false;
+        } else if(key == 83) {
+            down = false;
         }
     }
     window.onkeydown = function(e) {
@@ -25,6 +27,8 @@ function addListener() {
             left = true;
         } else if(key == 68) {
             right = true;
+        } else if(key == 83) {
+            down = true;
         }
     }
 }
