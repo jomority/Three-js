@@ -28,7 +28,7 @@ function loose() {
 
     if(player.position.y > 90) {
         player.position.y = 90;
-        window.alert("You lost!");
+        window.alert("You lost.");
     } else {
         renderer.render(scene, camera);
         meter.tick();
