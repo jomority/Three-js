@@ -3,10 +3,10 @@
  */
 
 var container;
-var renderer;//
+var renderer;
 var scene;
 var camera;
-var cube; // jhfgjgsdf
+var cube;
 var sphere;
 var cylinder;
 var plane, plane2, plane3, plane4;
