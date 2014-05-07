@@ -182,6 +182,20 @@ function run() {
         rendernew = true;
     }
 
+    //object collision
+    //*
+    for(var i = MAXOBJECTS; i > 0; i--) {
+        if(objects[objects.length - i] != undefined) {
+            var radius = objects[objects.length - i].radius;
+            var pointObjectX = objects[objects.length - i].position.x;
+            var pointObjectZ = objects[objects.length - i].position.z;
+            var v = new THREE.Vector2(pointObjectX - player.position.x, pointObjectZ - player.position.z);
+            if(v.length() < player.radius + radius) {
+                requestAnimationFrame(lost);
+            }
+        }
+    }//*/
+
     //objects
     //console.log(Math.round(z%100));
     if(Math.round(z%70) == 0) {
@@ -196,11 +210,6 @@ function run() {
             objects[objects.length-(MAXOBJECTS+1)] = null;
         }
     }
-
-
-
-
-
 
 
     renderer.render(scene, camera);

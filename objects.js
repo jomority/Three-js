@@ -17,6 +17,7 @@ function cylinder() {
     var texture = THREE.ImageUtils.loadTexture("barrel.jpg", {});
     var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(1,1,2.5,10,5),
         new THREE.MeshLambertMaterial({map: texture}));
+    cylinder.radius = 1;
 
 
 
