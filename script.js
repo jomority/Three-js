@@ -69,6 +69,8 @@ function onLoad() {
     scene.add(player);
 
 
+
+
     /*//test
     var vector2 = new THREE.Vector3(0,0,-2);
     var player2 = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
