@@ -15,6 +15,7 @@ var up = false, left = false, right = false, down = false;
 var z;
 var objects = new Array();
 var meter;
+var lost = false;
 
 var MAXOBJECTS = 5;
 
@@ -191,7 +192,7 @@ function run() {
             var pointObjectZ = objects[objects.length - i].position.z;
             var v = new THREE.Vector2(pointObjectX - player.position.x, pointObjectZ - player.position.z);
             if(v.length() < player.radius + radius) {
-                requestAnimationFrame(lost);
+                lost = true;
             }
         }
     }//*/
@@ -211,9 +212,14 @@ function run() {
         }
     }
 
-
     renderer.render(scene, camera);
     meter.tick();
+    if(!lost) {
 
-    requestAnimationFrame(run);
+        requestAnimationFrame(run);
+    } else {
+
+        vector1.set(player.position.x, player.position. y, player.position.z);
+        requestAnimationFrame(loose);
+    }
 }
