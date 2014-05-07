@@ -7,7 +7,7 @@ var renderer;
 var scene;
 var camera;
 var player;
-var ambientLight;
+var ambientLight, directLight;
 
 function onLoad() {
     //initialize
@@ -23,22 +23,29 @@ function onLoad() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 1000);
-    camera.position.y = 5;
-    camera.position.z = 5;
+    camera.position.y = 12;
+    camera.position.z = 8;
     camera.rotation.x = -Math.PI/4;
     scene.add(camera);
 
 
     //create player
-    player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:true}));
+    player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
     scene.add(player);
 
     //create ambient light
-    ambientLight = new THREE.AmbientLight(0x404040);
+    ambientLight = new THREE.AmbientLight(0x505050);
     scene.add(ambientLight);
 
+    //create direct light
+    directLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    scene.add(directLight);
 
-    addMouseHandler();
+
+
+    //start
+    addKeyHandler();
+    floor();
     run();
 }
 
@@ -55,6 +62,11 @@ function createRoom() {
 }
 
 function addMouseHandler() {
+    var dom = renderer.domElement;
+    dom.addEventListener('onMouseUp', onMouseUp(), false);
+}
+
+function addKeyHandler() {
     var dom = renderer.domElement;
     dom.addEventListener('onMouseUp', onMouseUp(), false);
 }
