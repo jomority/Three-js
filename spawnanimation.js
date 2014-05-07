@@ -7,6 +7,7 @@
 var temp2 = 1;
 function spawn() {
     renderer.render(scene, camera);
+    meter.tick();
 
     var phi = Math.PI/10*temp2;
     temp2 -=0.01;
@@ -33,6 +34,7 @@ function spawn() {
 var temp1 = 0;
 function spawn2() {
     renderer.render(scene, camera);
+    meter.tick();
 
     var phi = Math.PI/10*temp2;
     temp1 += phi;
