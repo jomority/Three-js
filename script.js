@@ -3,7 +3,7 @@
  */
 
 var container;
-var renderer;
+var renderer;//
 var scene;
 var camera;
 var cube;
