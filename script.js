@@ -8,6 +8,7 @@ var scene;
 var camera;
 var player;
 var ambientLight, directLight;
+var up = false, left = false, right = false;
 
 function onLoad() {
     //initialize
@@ -23,9 +24,9 @@ function onLoad() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 1000);
-    camera.position.y = 12;
-    camera.position.z = 8;
-    camera.rotation.x = -Math.PI/4;
+    camera.position.y = 5;
+    camera.position.z = 12;
+    camera.rotation.x = -Math.PI/16;
     scene.add(camera);
 
 
@@ -53,7 +54,15 @@ function onLoad() {
 function run() {
     renderer.render(scene, camera);
 
-
+    if(up) {
+        player.position.z -= 0.1;
+    }
+    if(left) {
+        player.position.x -= 0.1;
+    }
+    if(right) {
+        player.position.x += 0.1;
+    }
 
     requestAnimationFrame(run);
 }
@@ -64,18 +73,29 @@ function createRoom() {
 
 function addListener() {
     var dom = renderer.domElement;
-    //dom.addEventListener('onKeyDown', onKeyDown(e), false);
-    //dom.addEventListener('onKeyUp', onKeyUp(e), false);
+    //dom.addEventListener('onKeyDown', onKeyDown(event), false);
+    //dom.addEventListener('onKeyUp', onKeyUp(event), false);
     dom.addEventListener('onMouseUp', onMouseUp(), false);
-}
-
-function onKeyUp(e) {
-    var key = e.keyCode ? e.keyCode : e.which;
-    console.log(key);
-}
-function onKeyDown(e) {
-    var key = e.keyCode ? e.keyCode : e.which;
-    console.log(key);
+    window.onkeyup = function(e) {
+        var key = e.keyCode ? e.keyCode : e.which;
+        if(key == 87){
+            up = false;
+        } else if(key == 65) {
+            left = false;
+        } else if(key == 68) {
+            right = false;
+        }
+    }
+    window.onkeydown = function(e) {
+        var key = e.keyCode ? e.keyCode : e.which;
+        if(key == 87){
+            up = true;
+        } else if(key == 65) {
+            left = true;
+        } else if(key == 68) {
+            right = true;
+        }
+    }
 }
 function onMouseUp() {
 
