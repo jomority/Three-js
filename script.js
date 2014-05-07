@@ -192,10 +192,12 @@ function run() {
         scene.add(object);
 
         if(objects.length >= MAXOBJECTS) {
-            scene.remove(objects[objects.length-(MAXOBJwwwwECTS+1)]);
+            scene.remove(objects[objects.length-(MAXOBJECTS+1)]);
             objects[objects.length-(MAXOBJECTS+1)] = null;
         }
     }
+
+
 
 
 
