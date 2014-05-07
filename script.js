@@ -59,13 +59,13 @@ function onLoad() {
     //create player
     vector1 = new THREE.Vector3(0,10,-2);
     //vector1 = new THREE.Vector3(0,1,0);
-    player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshLambertMaterial({color: 0xff0000, wireframe:false}));
+    player = new THREE.Mesh(new THREE.SphereGeometry(0.8,20,10), new THREE.MeshLambertMaterial({color: 0xff0000, wireframe:false}));
     player.position.y = vector1.y;
     player.position.x = vector1.x;
     player.position.z = vector1.z;
     player.speedX = 0;
     player.speedZ = 0;
-    player.radius = 1;
+    player.radius = 0.8;
     player.castShadow = true;
     scene.add(player);
 
