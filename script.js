@@ -174,7 +174,7 @@ function run() {
             floor2.position.z -= 200;
             wallr2.position.z -= 200;
             walll2.position.z -= 200;
-S
+
             actualfloor1 = true;
         }
         rendernew = false;
@@ -192,7 +192,7 @@ S
         scene.add(object);
 
         if(objects.length >= MAXOBJECTS) {
-            scene.remove(objects[objects.length-(MAXOBJECTS+1)]);
+            scene.remove(objects[objects.length-(MAXOBJwwwwECTS+1)]);
             objects[objects.length-(MAXOBJECTS+1)] = null;
         }
     }
