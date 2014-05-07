@@ -23,9 +23,9 @@ function onLoad() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 1000);
-    camera.position.y = 12;
-    camera.position.z = 8;
-    camera.rotation.x = -Math.PI/4;
+    camera.position.y = 5;
+    camera.position.z = 12;
+    camera.rotation.x = -Math.PI/16;
     scene.add(camera);
 
 
