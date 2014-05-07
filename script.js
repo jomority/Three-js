@@ -37,6 +37,7 @@ function onLoad() {
     ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
 
+
     addMouseHandler();
     run();
 }
