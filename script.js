@@ -14,12 +14,14 @@ var ambientLight, directLight; //ambientLight2;
 var up = false, left = false, right = false, down = false;
 var z;
 var objects = new Array();
-var objectspawntime = 0;
+var meter;
 
 var MAXOBJECTS = 5;
 
 function onLoad() {
     //initialize
+    meter = new FPSMeter({graph:1});
+
     container = document.getElementById("container");
     container.style.width = window.innerWidth + "px";
     container.style.height = window.innerHeight + "px";
@@ -103,8 +105,6 @@ function onLoad() {
 }
 
 function run() {
-    renderer.render(scene, camera);
-
     //speedZ
     if(up) {
         player.speedZ += 0.01;
@@ -114,8 +114,8 @@ function run() {
     if(down && !up) {
         player.speedZ *= 0.97;
     }
-    if(player.speedZ > 5) {
-        player.speedZ = 5;
+    if(player.speedZ > 1) {
+        player.speedZ = 1;
     }
 
     //camera rotation
@@ -190,7 +190,6 @@ function run() {
         objects[objects.length] = object;
 
         scene.add(object);
-        objectspawntime = 0;
 
         if(objects.length >= MAXOBJECTS) {
             scene.remove(objects[objects.length-(MAXOBJECTS+1)]);
@@ -200,6 +199,10 @@ function run() {
 
 
 
-    objectspawntime++;
+
+
+    renderer.render(scene, camera);
+    meter.tick();
+
     requestAnimationFrame(run);
 }
