@@ -7,6 +7,8 @@ var renderer;
 var scene;
 var camera;
 var player;
+var floor1, floor2;
+var walll1, walll2, wallr1, wallr2;
 var ambientLight, directLight;
 var up = false, left = false, right = false;
 
@@ -61,15 +63,8 @@ function run() {
     }
     if(left) {
         player.position.x -= 0.1;
-        if(camera.rotation.z > 0) {
-            camera.rotation.z *= 0.9;
-        } else if (camera.rotation.z == 0){
-            camera.rotation.z -= 0.001;
-        } else {
-            camera.rotation.z *= 1.1;
-        }
-
-        if(camera.rotation.z < - Math.PI/8) camera.rotation.z = -Math.PI/8;
+        camera.rotation.z -= 0.01;
+        if(camera.rotation.z < -Math.PI/8) camera.rotation.z = -Math.PI/8;
     }
     if(right) {
         player.position.x += 0.1;
@@ -79,6 +74,8 @@ function run() {
     if(!right && !left) {
         camera.rotation.z *= 0.9;
     }
+
+
 
     requestAnimationFrame(run);
 }
