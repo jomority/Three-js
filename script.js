@@ -1,12 +1,12 @@
 /**
- * Created by gast-c31 on 06.05.14.hasköhfköhfasos
+ * Created by gast-c31 on 06.05.14
  */
 
 var container;
 var renderer;//
 var scene;
 var camera;
-var cube;
+var cube; // jhfgjgsdf
 var sphere;
 var cylinder;
 var plane, plane2, plane3, plane4;
