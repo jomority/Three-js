@@ -26,7 +26,7 @@ function onLoad() {
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 90);
     camera.position.y = 5;
     camera.position.z = 12;
     camera.rotation.x = -Math.PI/16;
@@ -36,6 +36,7 @@ function onLoad() {
     //create player
     player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
     player.position.y = 1;
+    player.speedX = 0;
     scene.add(player);
 
     //create ambient light
@@ -60,14 +61,13 @@ function run() {
     if(up) {
         player.position.z -= 0.1;
         camera.position.z -= 0.1;
+        player.rotation.x += 0.1;
     }
     if(left) {
-        player.position.x -= 0.1;
         camera.rotation.z -= 0.01;
         if(camera.rotation.z < -Math.PI/8) camera.rotation.z = -Math.PI/8;
     }
     if(right) {
-        player.position.x += 0.1;
         camera.rotation.z += 0.01;
         if(camera.rotation.z > Math.PI/8) camera.rotation.z = Math.PI/8;
     }
@@ -75,6 +75,8 @@ function run() {
         camera.rotation.z *= 0.9;
     }
 
+    player.speedX += camera.rotation.z/100;
+    player.position.x += player.speedX;
 
 
     requestAnimationFrame(run);
