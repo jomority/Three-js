@@ -14,16 +14,16 @@ function getObject() {
 }
 
 function cylinder() {
-
-    var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(2,2,4,10,5),
-        new THREE.MeshPhongMaterial({color: 0x0000ff, wireframe: false}));
+    var texture = THREE.ImageUtils.loadTexture("barrel.jpg", {});
+    var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(1,1,2.5,10,5),
+        new THREE.MeshLambertMaterial({map: texture}));
 
 
 
     cylinder.position.x = Math.random()*10-5
 
 
-    cylinder.position.y = 2;
+    cylinder.position.y = 1.25;
     cylinder.position.z = -z -50;
 
     return cylinder;
