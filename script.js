@@ -11,10 +11,12 @@ var floor1, floor2;
 var walll1, walll2, wallr1, wallr2;
 var rendernew = true, actualfloor1 = true;
 var ambientLight, directLight; //ambientLight2;
-var up = false, left = false, right = false;
+var up = false, left = false, right = false, down = false;
 var z;
 var objects = new Array();
 var objectspawntime = 0;
+
+var MAXOBJECTS = 5;
 
 function onLoad() {
     //initialize
@@ -29,8 +31,9 @@ function onLoad() {
     container.appendChild(renderer.domElement);
 
     scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0xffffff, 50, 100);
 
-    camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 900);
+    camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 100);
     camera.position.y = 5;
     camera.position.z = 12;
     camera.rotation.x = -Math.PI/16;
@@ -58,6 +61,7 @@ function onLoad() {
     player.position.x = vector1.x;
     player.position.z = vector1.z;
     player.speedX = 0;
+    player.speedZ = 0;
     player.radius = 1;
     player.castShadow = true;
     scene.add(player);
@@ -99,13 +103,20 @@ function onLoad() {
 function run() {
     renderer.render(scene, camera);
 
-    //camera rotation
+    //speedZ
     if(up) {
-        player.position.z -= 1;
-        camera.position.z -= 1;
-        //directLight.position.z -= 0.1;
-        player.rotation.x += 0.1;
+        player.speedZ += 0.01;
+    } else {
+        player.speedZ *= 0.99;
     }
+    if(down && !up) {
+        player.speedZ *= 0.97;
+    }
+    if(player.speedZ > 5) {
+        player.speedZ = 5;
+    }
+
+    //camera rotation
     if(left) {
         if(camera.rotation.z > Math.PI/32) {
             camera.rotation.z *= 0.9;
@@ -124,11 +135,17 @@ function run() {
     }
     if(!right && !left) {
         camera.rotation.z *= 0.9;
+        player.speedX *= 0.99;
     }
 
-    //player left + right
+    //player left + right + up
     player.speedX += camera.rotation.z/100;
     player.position.x += player.speedX;
+    player.rotation.z -= player.speedX;
+    player.position.z -= player.speedZ;
+    camera.position.z -= player.speedZ;
+    //directLight.position.z -= 0.1;
+    player.rotation.x -= player.speedZ;
 
     //collision
     if(player.position.x < -5 + player.radius) {
@@ -162,15 +179,21 @@ function run() {
     } else if(-z % 100 < -1 && -z % 100 > -80 && !rendernew) {
         rendernew = true;
     }
-    //console.log((player.position.z + 12) % 100 + "  " + rendernew + "  " + actualfloor1);
 
     //objects
-    if(objectspawntime>100) {
-        var object = objects[objects.length-1] = getObject();
+    //console.log(Math.round(z%100));
+    if(Math.round(z%70) == 0) {
+        var object = getObject();
+
+        objects[objects.length] = object;
 
         scene.add(object);
-        //console.log(z-20);
         objectspawntime = 0;
+
+        if(objects.length >= MAXOBJECTS) {
+            scene.remove(objects[objects.length-(MAXOBJECTS+1)]);
+            objects[objects.length-(MAXOBJECTS+1)] = null;
+        }
     }
 
 
