@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>JavaScript programms</title>
+    <script type="text/javascript" src="script.js"></script>
+    <!-- <style type="text/css" src="style.css"></style> -->
+</head>
+<body style="background: #333333; color: #999999;" onload="onLoad();">
+<h1 style="font-size: 50px;">JavaScript Calculator</h1>
+<form>
+    <input type="number" value="5" id="number1">
+    <input type="button" value="+" onclick="add()">
+    <input type="button" value="-" onclick="sub()">
+    <input type="button" value="*" onclick="multiply()">
+    <input type="button" value="/" onclick="divide()">
+    <input type="button" value="^" onclick="pow()">
+    <input type="button" value="√" onclick="root()">
+    <input type="button" value="log" onclick="log()">
+    <input type="button" value=">" onclick="greater()">
+    <input type="button" value="<" onclick="smaller()">
+    <input type="number" value="5" id="number2">
+    <input type="button" value="=" disabled="disabled">
+    <input type="number" value="10" id="result" disabled="disabled">
+
+    <div id="error" style="visibility: hidden; background-color: #FF0000;">ERROR: divide by zero</div>
+</form>
+
+
+<h1 style="font-size: 50px;">JavaScript addNumbers</h1>
+<form>
+    <input type="number" value="2" id="number3">
+    <input type="button" value="Start" onclick="addNumbers();">
+    <input type="number" value="0" id="result2" disabled="disabled">
+</form>
+<span style="font-size: 10px">&copy; Moritz J.</span>
+</body>
+</html>
