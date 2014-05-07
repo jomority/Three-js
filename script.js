@@ -31,6 +31,7 @@ function onLoad() {
 
     //create player
     player = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
+    player.position.y = 0.5;
     scene.add(player);
 
     //create ambient light
@@ -44,7 +45,7 @@ function onLoad() {
 
 
     //start
-    addKeyHandler();
+    addListener();
     floor();
     run();
 }
@@ -61,16 +62,21 @@ function createRoom() {
 
 }
 
-function addMouseHandler() {
+function addListener() {
     var dom = renderer.domElement;
+    //dom.addEventListener('onKeyDown', onKeyDown(e), false);
+    //dom.addEventListener('onKeyUp', onKeyUp(e), false);
     dom.addEventListener('onMouseUp', onMouseUp(), false);
 }
 
-function addKeyHandler() {
-    var dom = renderer.domElement;
-    dom.addEventListener('onMouseUp', onMouseUp(), false);
+function onKeyUp(e) {
+    var key = e.keyCode ? e.keyCode : e.which;
+    console.log(key);
 }
-
+function onKeyDown(e) {
+    var key = e.keyCode ? e.keyCode : e.which;
+    console.log(key);
+}
 function onMouseUp() {
 
 }
