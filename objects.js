@@ -20,7 +20,7 @@ function cylinder() {
 
 
 
-    cylinder.position.x = Math.random()*10-5
+    cylinder.position.x = Math.random()*8-4
 
 
     cylinder.position.y = 1.25;
