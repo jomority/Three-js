@@ -19,7 +19,7 @@ var meter;
 var lost = false;
 var spawnnext = true;
 var tx;
-var lives = 1;
+var lives = 3;
 var maxspeed = false;
 
 var MAXOBJECTS = 5;
