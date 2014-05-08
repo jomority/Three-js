@@ -25,7 +25,7 @@ function cylinder() {
 
 
     cylinder.position.y = 1.25;
-    cylinder.position.z = z[z.length-1] -100;
+    cylinder.position.z = z -100;
 
     return cylinder;
 }

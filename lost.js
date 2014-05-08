@@ -18,7 +18,7 @@ function lose() {
     var m = new THREE.Matrix4(
         1, 0, 0, -tempx,
         0, 1, 0, 0,
-        0, 0, 1, -z[z.length-1]+11,
+        0, 0, 1, -z+11,
         0, 0, 0, 1);
 
     vector1.applyMatrix4(m);
@@ -39,7 +39,7 @@ function lose() {
     var m = new THREE.Matrix4(
         1, 0, 0, tempx,
         0, 1, 0, 2,
-        0, 0, 1, z[z.length-1]-11,
+        0, 0, 1, z-11,
         0, 0, 0, 1);
 
     vector1.applyMatrix4(m);
@@ -54,7 +54,7 @@ function lose() {
     if (true) {
         var v = vector1.clone();
         v.x = 0;
-        v.z = z[z.length-1] - 12;
+        v.z = z - 12;
         camera.lookAt(v);
     }
 
