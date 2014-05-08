@@ -72,7 +72,6 @@ function floor() {
     scene.add(wallr2);
 
     sky1 = new THREE.Mesh(new THREE.PlaneGeometry(container.offsetHeight, container.offsetWidth),
-    new THREE.MeshLambertMaterial({map:texture}));
-    scene.add(sky1);
+        new THREE.MeshLambertMaterial({map:texture}));
+    //scene.add(sky1);
 }
-
