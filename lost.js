@@ -1,24 +1,28 @@
 /**
  * Created by gast-c31 on 07.05.14.
  */
-var temp3 = 0.5;
 
 function looseInit(){
-
-    //vector1.set(player.position.x, player.position. y, player.position.z);
-    tx = vector1.x;
+    tempx = vector1.x;
 
 }
 
 function loose() {
 
 
-    var phi = Math.PI/7*temp3;
-    //temp3 +=0.01;
+    var phi = Math.PI/14;
 
 
-    vector1.z -= z - 11;
-    vector1.x -= tx;
+    //vector1.z -= z - 11;
+    //vector1.x -= tempx;
+    var m = new THREE.Matrix4(
+        1, 0, 0, -tempx,
+        0, 1, 0, 0,
+        0, 0, 1, -z+11,
+        0, 0, 0, 1);
+
+    vector1.applyMatrix4(m);
+
 
     var m = new THREE.Matrix4(
         Math.cos(phi), 0,Math.sin(phi),0,
@@ -28,13 +32,21 @@ function loose() {
 
     vector1.applyMatrix4(m);
 
-    vector1.z += z -11;
-    vector1.x += tx;
+
+    //vector1.z += z -11;
+    //vector1.x += tempx;
+    //vector1.y +=2;
+    var m = new THREE.Matrix4(
+        1, 0, 0, tempx,
+        0, 1, 0, 2,
+        0, 0, 1, z-11,
+        0, 0, 0, 1);
+
+    vector1.applyMatrix4(m);
 
 
-    vector1.y +=2;
-//vector1.y *= 1.05;
 
+    //set player position to vector
     player.position.y = vector1.y;
     player.position.x = vector1.x;
     player.position.z = vector1.z;
