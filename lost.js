@@ -2,12 +2,12 @@
  * Created by gast-c31 on 07.05.14.
  */
 
-function looseInit(){
+function loseInit(){
     tempx = vector1.x;
 
 }
 
-function loose() {
+function lose() {
 
 
     var phi = Math.PI/14;
@@ -62,9 +62,19 @@ function loose() {
         player.position.y = 100;
         //window.alert("Lost!!!!");
         //console.log("Lost!!!");
+        //Game over text
+        var gameover = new THREE.Mesh(new THREE.TextGeometry("Game over", {size: 3, font:"helvetiker", height: 1}),
+            new THREE.MeshLambertMaterial({color: 0xffffff}));
+        gameover.position.x = player.position.x - 12.5;
+        gameover.position.y = player.position.y - 60;
+        gameover.position.z = player.position.z + 5;
+        gameover.rotation.x = (Math.PI/2);
+
+        scene.add(gameover);
+        renderer.render(scene, camera);
     } else {
         renderer.render(scene, camera);
         meter.tick();
-        requestAnimationFrame(loose);
+        requestAnimationFrame(lose);
     }
 }
