@@ -9,6 +9,7 @@ var camera;
 var player, vector1;
 var floor1, floor2;
 var walll1, walll2, wallr1, wallr2;
+var sky1;
 var rendernew = true, actualfloor1 = true;
 var ambientLight, directLight; //ambientLight2;
 var up = false, left = false, right = false, down = false;
