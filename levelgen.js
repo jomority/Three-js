@@ -12,7 +12,7 @@ function floor() {
     var texture = THREE.ImageUtils.loadTexture("colours2.jpg", {});
 
     //floor1 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({color: 0xB452CD}));
-    floor1 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({map: texture}));
+    floor1 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({map:texture}));
     floor1.rotation.x = - Math.PI/2;
     floor1.position.z = position1.z;
     floor1.position.y = position1.y;
@@ -20,7 +20,7 @@ function floor() {
     scene.add(floor1);
 
     //floor2 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({color: 0xB452CD, wireframe:false}));
-    floor2 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({map: texture}));
+    floor2 = new THREE.Mesh(new THREE.PlaneGeometry(size1.x,size1.y), new THREE.MeshLambertMaterial({map:texture}));
     floor2.rotation.x = - Math.PI/2;
     floor2.position.z = position1.z - size1.y;
     floor2.position.y = position1.y;

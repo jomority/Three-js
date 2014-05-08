@@ -19,7 +19,7 @@ var meter;
 var lost = false;
 var spawnnext = true;
 var tx;
-var lives = 3;
+var lives = 1;
 
 var MAXOBJECTS = 5;
 
@@ -31,7 +31,7 @@ function onLoad() {
     container.style.width = window.innerWidth + "px";
     container.style.height = window.innerHeight + "px";
 
-    renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer = new THREE.WebGLRenderer({ antialias: true});
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     renderer.setClearColor(0x1E90FF,1);
 
@@ -45,25 +45,13 @@ function onLoad() {
     camera.position.z = 12;
     scene.add(camera);
 
-    /*/shadows
-     renderer.shadowMapEnabled = true;
-     renderer.shadowMapSoft = false;
-
-     renderer.shadowCameraNear = 3;
-     renderer.shadowCameraFar = camera.far;
-     renderer.shadowCameraFov = 50;
-
-     renderer.shadowMapBias = 0.0039;
-     renderer.shadowMapDarkness = 0.5;
-     renderer.shadowMapWidth = 1024;
-     renderer.shadowMapHeight = 1024;//*/
-
 
     //create player
     vector1 = new THREE.Vector4(0,100,-30,1);
     //vector1 = new THREE.Vector3(0,1,0);
     var texture = THREE.ImageUtils.loadTexture("amiga.png", {});
-    player = new THREE.Mesh(new THREE.SphereGeometry(0.8,20,10), new THREE.MeshLambertMaterial({map: texture, wireframe:false}));
+    player = new THREE.Mesh(new THREE.SphereGeometry(0.8,20,10), new THREE.MeshLambertMaterial({map:texture}));
+    //player = new THREE.Mesh(new THREE.BoxGeometry(1,1,1,1,1,1), new THREE.MeshLambertMaterial({color:0xCC0000}));
     player.position.y = vector1.y;
     player.position.x = vector1.x;
     player.position.z = vector1.z;
@@ -71,6 +59,7 @@ function onLoad() {
     player.speedZ = 0;
     player.radius = 0.8;
     player.castShadow = true;
+    //player.receiveShadow = true;
     scene.add(player);
 
 
@@ -95,10 +84,25 @@ function onLoad() {
     //create direct light
     directLight = new THREE.DirectionalLight(0xffffff, 1);
     directLight.position.y = 2;
-    directLight.position.z = 2;
+    directLight.position.z = 1;
     directLight.position.x = 1;
     directLight.castShadow = true;
+    directLight.shadowDarkness = 1;
+    directLight.shadowCameraVisible = true;
     scene.add(directLight);
+
+    /*/shadows
+    renderer.shadowMapEnabled = true;
+    renderer.shadowMapSoft = true;
+
+    renderer.shadowCameraNear = 0;
+    renderer.shadowCameraFar = camera.far;
+    renderer.shadowCameraFov = 45;
+
+    renderer.shadowMapBias = 0.0039;
+    renderer.shadowMapDarkness = 0.5;
+    renderer.shadowMapWidth = 1024;
+    renderer.shadowMapHeight = 1024;//*/
 
 
 
