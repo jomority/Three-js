@@ -19,6 +19,7 @@ var meter;
 var lost = false;
 var spawnnext = true;
 var tx;
+var lives = 3;
 
 var MAXOBJECTS = 5;
 
@@ -32,12 +33,12 @@ function onLoad() {
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(container.offsetWidth, container.offsetHeight);
-    renderer.setClearColor(0xffffff,1);
+    renderer.setClearColor(0x1E90FF,1);
 
     container.appendChild(renderer.domElement);
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0xffffff, 50, 100);
+    scene.fog = new THREE.Fog(0x1E90FF, 50, 100);
 
     camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 100);
     camera.position.y = 5;
@@ -197,7 +198,17 @@ function run() {
             var pointObjectZ = objects[objects.length - i].position.z;
             var v = new THREE.Vector2(pointObjectX - vector1.x, pointObjectZ - vector1.z);
             if(v.length() < player.radius + radius) {
-                lost = true;
+                lives--;
+                document.getElementById("lives").innerHTML = "lives: " + lives;
+                if (lives == 0){
+                    lost = true;
+                } else {
+                    player.speedX *= -0.5;
+                    player.speedZ *= -0.5;
+                    scene.remove(objects[objects.length - i]);
+                    objects[objects.length - i] = null;
+                }
+
             }
         }
     }//*/
