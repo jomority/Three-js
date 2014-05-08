@@ -34,7 +34,7 @@ function floor() {
     var size2 = new THREE.Vector2(5,100);
     var position2 = new THREE.Vector3(- size2.x,size2.x/2, position1.z);
 
-    var texture = THREE.ImageUtils.loadTexture("steel.jpg");
+    var texture = THREE.ImageUtils.loadTexture("colourswand.jpg");
     walll1 = new THREE.Mesh(new THREE.PlaneGeometry(size2.x,size2.y), new THREE.MeshLambertMaterial({map: texture}));
     walll1.rotation.z = - Math.PI/2;
     walll1.rotation.y = Math.PI/2;
@@ -44,15 +44,6 @@ function floor() {
     walll1.receiveShadow = true;
     scene.add(walll1);
 
-    wallr1 = new THREE.Mesh(new THREE.PlaneGeometry(size2.x,size2.y), new THREE.MeshLambertMaterial({map: texture}));
-    wallr1.rotation.z = - Math.PI/2;
-    wallr1.rotation.y = - Math.PI/2;
-    wallr1.position.z = position2.z;
-    wallr1.position.x = -position2.x;
-    wallr1.position.y = position2.y;
-    wallr1.receiveShadow = true;
-    scene.add(wallr1);
-
     walll2 = new THREE.Mesh(new THREE.PlaneGeometry(size2.x,size2.y), new THREE.MeshLambertMaterial({map: texture}));
     walll2.rotation.z = - Math.PI/2;
     walll2.rotation.y = Math.PI/2;
@@ -61,6 +52,16 @@ function floor() {
     walll2.position.y = position2.y;
     walll2.receiveShadow = true;
     scene.add(walll2);
+
+    var texture = THREE.ImageUtils.loadTexture("colourswand2.jpg");
+    wallr1 = new THREE.Mesh(new THREE.PlaneGeometry(size2.x,size2.y), new THREE.MeshLambertMaterial({map: texture}));
+    wallr1.rotation.z = - Math.PI/2;
+    wallr1.rotation.y = - Math.PI/2;
+    wallr1.position.z = position2.z;
+    wallr1.position.x = -position2.x;
+    wallr1.position.y = position2.y;
+    wallr1.receiveShadow = true;
+    scene.add(wallr1);
 
     wallr2 = new THREE.Mesh(new THREE.PlaneGeometry(size2.x,size2.y), new THREE.MeshLambertMaterial({map: texture}));
     wallr2.rotation.z = - Math.PI/2;
