@@ -13,7 +13,7 @@ var sky1;
 var rendernew = true, actualfloor1 = true;
 var ambientLight, directLight; //ambientLight2;
 var up = false, left = false, right = false, down = false;
-var z;
+var z = new Array();
 var objects = new Array();
 var meter;
 var lost = false;
@@ -167,11 +167,11 @@ function run() {
     }
 
     //set z variable
-    z = player.position.z + 12;
+    z[z.length] = player.position.z + 12;
     //console.log(z);
 
     //move floor & walls
-    if(z % 100 < -90 && rendernew) {
+    if(z[z.length-1] % 100 < -90 && rendernew) {
         if(actualfloor1) {
             floor1.position.z -= 200;
             walll1.position.z -= 200;
@@ -186,7 +186,7 @@ function run() {
             actualfloor1 = true;
         }
         rendernew = false;
-    } else if(z % 100 < -1 && z % 100 > -80 && !rendernew) {
+    } else if(z[z.length-1] % 100 < -1 && z[z.length-1] % 100 > -80 && !rendernew) {
         rendernew = true;
     }
 
@@ -217,9 +217,9 @@ function run() {
     //objects
     //console.log(Math.round(z%100));
 
-    if(Math.round((-z)%70) > 60) {
+    if(Math.round((-z[z.length-1])%70) > 60) {
         spawnnext = true;
-    } else if(Math.round((-z)%70) > 0 && spawnnext) {
+    } else if(Math.round((-z[z.length-1])%70) > 0 && spawnnext) {
         var object = getObject();
 
         objects[objects.length] = object;
