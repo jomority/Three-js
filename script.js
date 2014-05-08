@@ -64,16 +64,6 @@ function onLoad() {
 
 
 
-
-    /*//test
-     var vector2 = new THREE.Vector3(0,0,-2);
-     var player2 = new THREE.Mesh(new THREE.SphereGeometry(1,20,10), new THREE.MeshPhongMaterial({color: 0xff0000, wireframe:false}));
-     player2.position.y = vector2.y;
-     player2.position.x = vector2.x;
-     player2.position.z = vector2.z;
-     player2.receiveShadow = true;
-     scene.add(player2);//*/
-
     //create ambient light
     ambientLight = new THREE.AmbientLight(0x212223);
     scene.add(ambientLight);
@@ -83,26 +73,36 @@ function onLoad() {
 
     //create direct light
     directLight = new THREE.DirectionalLight(0xffffff, 1);
-    directLight.position.y = 2;
-    directLight.position.z = 1;
-    directLight.position.x = 1;
+    directLight.position.y = 20;
+    directLight.position.z = 10;
+    directLight.position.x = 5;
     directLight.castShadow = true;
-    directLight.shadowDarkness = 1;
-    directLight.shadowCameraVisible = true;
+
+    directLight.shadowDarkness = 0.5;
+    directLight.shadowCameraVisible = false;
+
+    directLight.shadowCameraLeft = -5;
+    directLight.shadowCameraRight = 2;
+    directLight.shadowCameraTop = 2;
+    directLight.shadowCameraBottom = -2;
+
+    directLight.shadowCameraNear = 5;
+    directLight.shadowCameraFar = 5000;
+    directLight.shadowCameraFov = 45;
+
+    directLight.shadowMapBias = 0.0039;
+    directLight.shadowMapDarkness = 0.5;
+    directLight.shadowMapWidth = 1024;
+    directLight.shadowMapHeight = 1024;
+
+    //directLight.shadowMapEnabled = true;
+    //directLight.shadowMapSoft = true;
+
     scene.add(directLight);
 
-    /*/shadows
+    //shadows
     renderer.shadowMapEnabled = true;
     renderer.shadowMapSoft = true;
-
-    renderer.shadowCameraNear = 0;
-    renderer.shadowCameraFar = camera.far;
-    renderer.shadowCameraFov = 45;
-
-    renderer.shadowMapBias = 0.0039;
-    renderer.shadowMapDarkness = 0.5;
-    renderer.shadowMapWidth = 1024;
-    renderer.shadowMapHeight = 1024;//*/
 
 
 
@@ -115,12 +115,9 @@ function onLoad() {
 
 function run() {
     //speedZ
-    if(up) {
+    if(!down) {
         player.speedZ += 0.01;
     } else {
-        player.speedZ *= 0.99;
-    }
-    if(down && !up) {
         player.speedZ *= 0.97;
     }
     if(player.speedZ > 1) {
@@ -240,6 +237,8 @@ function run() {
     player.position.y = vector1.y;
     player.position.x = vector1.x;
     player.position.z = vector1.z;
+    directLight.target = player;
+    directLight.position.z = vector1.z + 10;
 
     renderer.render(scene, camera);
     meter.tick();
