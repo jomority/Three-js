@@ -20,6 +20,7 @@ var lost = false;
 var spawnnext = true;
 var tx;
 var lives = 1;
+var maxspeed = false;
 
 var MAXOBJECTS = 5;
 
@@ -42,7 +43,7 @@ function onLoad() {
 
     camera = new THREE.PerspectiveCamera(45, container.offsetWidth/container.offsetHeight, 1, 100);
     camera.position.y = 5;
-    camera.position.z = 12;
+    camera.position.z = 5;
     scene.add(camera);
 
 
@@ -55,6 +56,7 @@ function onLoad() {
     player.position.y = vector1.y;
     player.position.x = vector1.x;
     player.position.z = vector1.z;
+    player.positionZ = new Array(0, vector1.z);
     player.speedX = 0;
     player.speedZ = 0;
     player.radius = 0.8;
@@ -118,10 +120,13 @@ function run() {
     if(!down) {
         player.speedZ += 0.01;
     } else {
-        player.speedZ *= 0.97;
+        player.speedZ *= 0.99;
     }
     if(player.speedZ > 1) {
         player.speedZ = 1;
+        maxspeed = true;
+    } else if(player.speedZ < 0.7 && maxspeed) {
+        player.speedZ = 0.7;
     }
 
     //camera rotation
@@ -153,7 +158,10 @@ function run() {
     vector1.x += player.speedX;
     player.rotation.z -= player.speedX;
     vector1.z -= player.speedZ;
-    camera.position.z -= player.speedZ;
+    player.positionZ[player.positionZ.length] = vector1.z;
+    if(player.positionZ[player.positionZ.length - 10] != undefined) {
+        camera.position.z = player.positionZ[player.positionZ.length - 10] + 5;
+    }
     //directLight.position.z -= 0.1;
     player.rotation.x -= player.speedZ;
 
