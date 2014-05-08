@@ -65,7 +65,7 @@ function lose() {
         //Game over text
         var gameover = new THREE.Mesh(new THREE.TextGeometry("Game over", {size: 3, font:"helvetiker", height: 1}),
             new THREE.MeshLambertMaterial({color: 0xffffff}));
-        gameover.position.x = player.position.x - 12.5;
+        gameover.position.x = player.position.x - 12;
         gameover.position.y = player.position.y - 60;
         gameover.position.z = player.position.z + 5;
         gameover.rotation.x = (Math.PI/2);
