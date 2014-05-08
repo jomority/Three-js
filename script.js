@@ -19,8 +19,10 @@ var meter;
 var lost = false;
 var spawnnext = true;
 var tx;
-var lives = 1;
+var lives = 3;
 var maxspeed = false;
+var breakcount = 0;
+var points = 0;
 
 var MAXOBJECTS = 5;
 
@@ -118,17 +120,21 @@ function onLoad() {
 
 function run() {
     //speedZ
-    if(!down) {
-        player.speedZ += 0.01;
-    } else {
+    if(down /*&& breakcount < 10*/) {
         player.speedZ *= 0.99;
+    } else {
+        player.speedZ += 0.01;
     }
     if(player.speedZ > 1) {
         player.speedZ = 1;
         maxspeed = true;
+        //breakcount =0;
     } else if(player.speedZ < 0.7 && maxspeed) {
         player.speedZ = 0.7;
+        //breakcount++;
+    } else {
     }
+    //console.log(breakcount);
 
     //camera rotation
     if(left) {
@@ -218,7 +224,7 @@ function run() {
             var v = new THREE.Vector2(pointObjectX - vector1.x, pointObjectZ - vector1.z);
             if(v.length() < player.radius + radius) {
                 lives--;
-                document.getElementById("lives").innerHTML = "lives: " + lives;
+                document.getElementById("lives").innerHTML = "points: " + points + "  lives: " + lives;
                 if (lives == 0){
                     lost = true;
                 } else {
@@ -228,9 +234,14 @@ function run() {
                     objects[objects.length - i] = null;
                 }
 
+            } else if (player.position.z < objects[objects.length - i].position.z && objects[objects.length - i].points) {
+                points++;
+                objects[objects.length - i].points = false;
+                document.getElementById("lives").innerHTML = "points: " + points + "  lives: " + lives;
             }
         }
     }//*/
+
 
     //objects
     //console.log(Math.round(z%100));

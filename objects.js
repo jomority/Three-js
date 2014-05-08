@@ -19,7 +19,7 @@ function cylinder() {
         new THREE.MeshLambertMaterial({map: texture}));
     cylinder.radius = 1;
 
-
+    cylinder.points = true;
 
     cylinder.position.x = Math.random()*8-4;
 
