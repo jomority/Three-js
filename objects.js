@@ -21,11 +21,11 @@ function cylinder() {
 
 
 
-    cylinder.position.x = Math.random()*8-4
+    cylinder.position.x = Math.random()*8-4;
 
 
     cylinder.position.y = 1.25;
-    cylinder.position.z = -z -50;
+    cylinder.position.z = z -100;
 
     return cylinder;
 }
