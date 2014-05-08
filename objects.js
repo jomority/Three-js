@@ -29,13 +29,3 @@ function cylinder() {
 
     return cylinder;
 }
-
-function sphere() {
-    var loader = new THREE.JSONLoader();
-    loader.load("sphere.js", function(data, material) {
-        //data.computeVertexNormals();
-        var material = new THREE.MeshFaceMaterial(material);
-        var mesh = new THREE.Mesh (data, material);
-        scene.add(mesh);
-    });
-}
