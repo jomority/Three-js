@@ -50,7 +50,7 @@ function onLoad() {
     vector1 = new THREE.Vector4(0,100,-30,1);
     //vector1 = new THREE.Vector3(0,1,0);
     var texture = THREE.ImageUtils.loadTexture("amiga.png", {});
-    player = new THREE.Mesh(new THREE.SphereGeometry(0.8,20,10), new THREE.MeshLambertMaterial({color:0xCC0000}));
+    player = new THREE.Mesh(new THREE.SphereGeometry(0.8,20,10), new THREE.MeshLambertMaterial({map:texture}));
     //player = new THREE.Mesh(new THREE.BoxGeometry(1,1,1,1,1,1), new THREE.MeshLambertMaterial({color:0xCC0000}));
     player.position.y = vector1.y;
     player.position.x = vector1.x;
