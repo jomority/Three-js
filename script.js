@@ -57,6 +57,7 @@ function onLoad() {
     player.position.x = vector1.x;
     player.position.z = vector1.z;
     player.positionZ = new Array(0, vector1.z);
+    //player.rotation.z += Math.PI/2;
     player.speedX = 0;
     player.speedZ = 0;
     player.radius = 0.8;
@@ -156,7 +157,16 @@ function run() {
     //player left + right + up
     player.speedX += camera.rotation.z/100;
     vector1.x += player.speedX;
+
+
     player.rotation.z -= player.speedX;
+    /*var rotWorldMatrix = new THREE.Matrix4();
+    rotWorldMatrix.makeRotationAxis(new THREE.Vector3(0,0,1).normalize(), -player.speedX);
+    rotWorldMatrix.multiply(player.matrix);
+    player.matrix = rotWorldMatrix;
+    player.rotation.setFromRotationMatrix(player.matrix);*/
+
+
     vector1.z -= player.speedZ;
     player.positionZ[player.positionZ.length] = vector1.z;
     if(player.positionZ[player.positionZ.length - 10] != undefined) {
